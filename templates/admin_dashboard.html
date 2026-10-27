@@ -1,0 +1,961 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6fb;
+            color: #1e293b;
+        }
+
+
+        .navbar {
+
+            background: white;
+
+            padding: 20px 40px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            box-shadow:
+                0 2px 10px
+                rgba(0,0,0,.05);
+
+        }
+
+
+        .logo {
+
+            font-size: 22px;
+
+            font-weight: bold;
+
+        }
+
+
+        .logo span {
+
+            color: #4f46e5;
+
+        }
+
+
+        .logout {
+
+            text-decoration: none;
+
+            color: #64748b;
+
+        }
+
+
+        .container {
+
+            max-width: 1200px;
+
+            margin: 40px auto;
+
+            padding: 0 20px;
+
+        }
+
+
+        .heading {
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .heading h1 {
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .heading p {
+
+            color: #64748b;
+
+        }
+
+
+        /* ============================
+           STATS
+        ============================ */
+
+        .stats {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 20px;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .stat-card {
+
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 5px 20px
+                rgba(0,0,0,.05);
+
+        }
+
+
+        .stat-title {
+
+            color: #64748b;
+
+            font-size: 14px;
+
+        }
+
+
+        .stat-number {
+
+            font-size: 32px;
+
+            font-weight: bold;
+
+            margin-top: 8px;
+
+        }
+
+
+        /* ============================
+           SECTION
+        ============================ */
+
+        .section {
+
+            background: white;
+
+            border-radius: 15px;
+
+            padding: 25px;
+
+            margin-bottom: 30px;
+
+            box-shadow:
+                0 5px 20px
+                rgba(0,0,0,.05);
+
+        }
+
+
+        .section-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 20px;
+
+            gap: 15px;
+
+        }
+
+
+        .section-header h2 {
+
+            margin: 0;
+
+        }
+
+
+        /* ============================
+           SEARCH AREA
+        ============================ */
+
+        .search-box {
+
+            display: flex;
+
+            gap: 10px;
+
+            margin-bottom: 20px;
+
+            flex-wrap: wrap;
+
+        }
+
+
+        .search-box input {
+
+            padding: 11px 13px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+
+            outline: none;
+
+        }
+
+
+        .search-box input:focus {
+
+            border-color: #4f46e5;
+
+        }
+
+
+        .employee-search {
+
+            width: 300px;
+
+        }
+
+
+        .attendance-search {
+
+            width: 260px;
+
+        }
+
+
+        .date-input {
+
+            width: 170px;
+
+        }
+
+
+        .btn {
+
+            text-decoration: none;
+
+            border: none;
+
+            border-radius: 8px;
+
+            padding: 10px 16px;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            display: inline-block;
+
+        }
+
+
+        .btn-primary {
+
+            background: #4f46e5;
+
+            color: white;
+
+        }
+
+
+        .btn-secondary {
+
+            background: #e2e8f0;
+
+            color: #334155;
+
+        }
+
+
+        .btn-edit {
+
+            background: #eef2ff;
+
+            color: #4f46e5;
+
+        }
+
+
+        .btn-delete {
+
+            background: #fee2e2;
+
+            color: #dc2626;
+
+        }
+
+
+        .btn-excel {
+
+            background: #059669;
+
+            color: white;
+
+        }
+
+
+        /* ============================
+           TABLE
+        ============================ */
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+        }
+
+
+        th {
+
+            background: #f8fafc;
+
+            text-align: left;
+
+            padding: 13px;
+
+            font-size: 13px;
+
+            color: #64748b;
+
+        }
+
+
+        td {
+
+            padding: 13px;
+
+            border-bottom:
+                1px solid #e2e8f0;
+
+        }
+
+
+        .actions {
+
+            display: flex;
+
+            gap: 8px;
+
+        }
+
+
+        .empty {
+
+            text-align: center;
+
+            padding: 30px;
+
+            color: #94a3b8;
+
+        }
+
+
+        /* ============================
+           FILTER LABEL
+        ============================ */
+
+        .filter-title {
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            color: #64748b;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .filter-group {
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+
+        /* ============================
+           MOBILE
+        ============================ */
+
+        @media(max-width:700px) {
+
+            .stats {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .section {
+
+                overflow-x: auto;
+
+            }
+
+
+            table {
+
+                min-width: 800px;
+
+            }
+
+
+            .employee-search,
+            .attendance-search {
+
+                width: 100%;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ============================
+     NAVBAR
+============================ -->
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        <span>Face</span>
+        Attendance Admin
+
+    </div>
+
+
+    <a
+        href="{% url 'admin_logout' %}"
+        class="logout">
+
+        Logout
+
+    </a>
+
+</nav>
+
+
+<div class="container">
+
+
+<!-- ============================
+     HEADER
+============================ -->
+
+<div class="heading">
+
+    <h1>Dashboard</h1>
+
+    <p>
+        Manage employees and attendance
+    </p>
+
+</div>
+
+
+<!-- ============================
+     STATISTICS
+============================ -->
+
+<div class="stats">
+
+
+    <div class="stat-card">
+
+        <div class="stat-title">
+
+            Total Employees
+
+        </div>
+
+        <div class="stat-number">
+
+            {{ total_employees }}
+
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-title">
+
+            Today's Attendance
+
+        </div>
+
+        <div class="stat-number">
+
+            {{ today_attendance }}
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- =====================================================
+     EMPLOYEES
+===================================================== -->
+
+<div class="section">
+
+
+    <div class="section-header">
+
+        <h2>
+            Employees
+        </h2>
+
+
+        <a
+            href="{% url 'add_employee' %}"
+            class="btn btn-primary">
+
+            + Add Employee
+
+        </a>
+
+    </div>
+
+
+    <!-- EMPLOYEE SEARCH -->
+
+    <form
+        method="GET"
+        class="search-box">
+
+        <input
+            type="text"
+            name="employee_search"
+            class="employee-search"
+            placeholder="Search employee..."
+            value="{{ employee_search }}">
+
+        <button
+            type="submit"
+            class="btn btn-primary">
+
+            Search
+
+        </button>
+
+
+        <a
+            href="{% url 'admin_dashboard' %}"
+            class="btn btn-secondary">
+
+            Clear
+
+        </a>
+
+    </form>
+
+
+    <!-- EMPLOYEE TABLE -->
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>ID</th>
+
+                <th>Employee Code</th>
+
+                <th>Name</th>
+
+                <th>Designation</th>
+
+                <th>Actions</th>
+
+            </tr>
+
+        </thead>
+
+
+        <tbody>
+
+
+        {% for employee in employees %}
+
+        <tr>
+
+
+            <td>
+                {{ employee.id }}
+            </td>
+
+
+            <td>
+                {{ employee.emp_code }}
+            </td>
+
+
+            <td>
+                {{ employee.emp_name }}
+            </td>
+
+
+            <td>
+                {{ employee.designation }}
+            </td>
+
+
+            <td>
+
+                <div class="actions">
+
+
+                    <a
+                        href="{% url 'edit_employee' employee.id %}"
+                        class="btn btn-edit">
+
+                        Edit
+
+                    </a>
+
+
+                    <a
+                        href="{% url 'delete_employee' employee.id %}"
+                        class="btn btn-delete">
+
+                        Delete
+
+                    </a>
+
+
+                </div>
+
+            </td>
+
+
+        </tr>
+
+
+        {% empty %}
+
+        <tr>
+
+            <td
+                colspan="5"
+                class="empty">
+
+                No employees found.
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+
+        </tbody>
+
+    </table>
+
+
+</div>
+
+
+<!-- =====================================================
+     ATTENDANCE
+===================================================== -->
+
+<div class="section">
+
+
+    <div class="section-header">
+
+        <h2>
+            Attendance
+        </h2>
+
+
+        <!-- EXPORT FILTERED DATA -->
+
+        <a
+            href="{% url 'export_attendance_excel' %}?attendance_search={{ attendance_search|urlencode }}&attendance_date={{ attendance_date }}&date_from={{ date_from }}&date_to={{ date_to }}"
+            class="btn btn-excel">
+
+            ↓ Export Excel
+
+        </a>
+
+    </div>
+
+
+    <!-- ============================
+         ATTENDANCE FILTER
+    ============================ -->
+
+    <form
+        method="GET"
+        class="search-box">
+
+
+        <!-- SEARCH -->
+
+        <div class="filter-group">
+
+            <div class="filter-title">
+
+                Search Employee
+
+            </div>
+
+            <input
+                type="text"
+                name="attendance_search"
+                class="attendance-search"
+                placeholder="Name, code or designation"
+                value="{{ attendance_search }}">
+
+        </div>
+
+
+        <!-- SINGLE DATE -->
+
+        <div class="filter-group">
+
+            <div class="filter-title">
+
+                Specific Date
+
+            </div>
+
+            <input
+                type="date"
+                name="attendance_date"
+                class="date-input"
+                value="{{ attendance_date }}">
+
+        </div>
+
+
+        <!-- FROM -->
+
+        <div class="filter-group">
+
+            <div class="filter-title">
+
+                From
+
+            </div>
+
+            <input
+                type="date"
+                name="date_from"
+                class="date-input"
+                value="{{ date_from }}">
+
+        </div>
+
+
+        <!-- TO -->
+
+        <div class="filter-group">
+
+            <div class="filter-title">
+
+                To
+
+            </div>
+
+            <input
+                type="date"
+                name="date_to"
+                class="date-input"
+                value="{{ date_to }}">
+
+        </div>
+
+
+        <div
+            style="
+                display:flex;
+                align-items:end;
+                gap:8px;
+            ">
+
+
+            <button
+                type="submit"
+                class="btn btn-primary">
+
+                Filter
+
+            </button>
+
+
+            <a
+                href="{% url 'admin_dashboard' %}"
+                class="btn btn-secondary">
+
+                Clear
+
+            </a>
+
+
+        </div>
+
+
+    </form>
+
+
+    <!-- ============================
+         ATTENDANCE TABLE
+    ============================ -->
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>
+                    Employee
+                </th>
+
+                <th>
+                    Employee Code
+                </th>
+
+                <th>
+                    Designation
+                </th>
+
+                <th>
+                    Date
+                </th>
+
+                <th>
+                    First Login
+                </th>
+
+            </tr>
+
+        </thead>
+
+
+        <tbody>
+
+
+        {% for attendance in attendances %}
+
+        <tr>
+
+
+            <td>
+
+                {{ attendance.employee.emp_name }}
+
+            </td>
+
+
+            <td>
+
+                {{ attendance.employee.emp_code }}
+
+            </td>
+
+
+            <td>
+
+                {{ attendance.employee.designation }}
+
+            </td>
+
+
+            <td>
+
+                {{ attendance.attendance_date|date:"d M Y" }}
+
+            </td>
+
+
+            <td>
+
+                {{ attendance.detected_at|time:"h:i:s A" }}
+
+            </td>
+
+
+        </tr>
+
+
+        {% empty %}
+
+        <tr>
+
+            <td
+                colspan="5"
+                class="empty">
+
+                No attendance records found.
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+
+        </tbody>
+
+    </table>
+
+
+</div>
+
+
+</div>
+
+</body>
+
+</html>
